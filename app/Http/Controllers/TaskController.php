@@ -15,6 +15,8 @@ class TaskController extends Controller
      */
     public function index()
     {
+        // abort(500);  // エラー表示用
+        // return [];  // ０件表示用
         return Task::orderByDesc('id')->get();
     }
 
