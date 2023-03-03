@@ -74,4 +74,22 @@ class TaskController extends Controller
             ? response()->json($task)
             : response()->json([], 500);
     }
+
+    /**
+     * is_doneの更新
+     * 
+     * @param  Task  $task
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateDone(task $task, Request $request)
+    {
+
+        // abort(500);
+        $task->is_done = $request->is_done;
+
+        return $task->update()
+            ? response()->json($task)
+            : response()->json([], 500);
+    }
 }
