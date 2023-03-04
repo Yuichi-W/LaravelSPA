@@ -85,7 +85,6 @@ class TaskController extends Controller
     public function updateDone(task $task, Request $request)
     {
 
-        // abort(500);
         $task->is_done = $request->is_done;
 
         return $task->update()
