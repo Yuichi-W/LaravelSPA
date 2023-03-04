@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as api from '../api/TaskAPI';
+import { toast } from 'react-toastify';
 
 export const useTasks = () => {
     return useQuery(['tasks'],async () => api.getTasks())
@@ -13,6 +14,11 @@ export const useUpdateDoneTask = () => {
         onSuccess: () => {
             // コンポーネントの再描画,引数はkeyとなる文字列
             queryClient.invalidateQueries(['tasks']);
+        },
+        onError: () => {
+            // エラーmessageはreact-toastifyのtoastのerrorメソッドを使用
+            // 引数に表示したいエラーmessageを記載
+            toast.error('更新に失敗しました');
         }
     });
 }
