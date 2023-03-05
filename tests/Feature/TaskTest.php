@@ -6,10 +6,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 //モデルをインポート
 use App\Models\Task;
+use App\Models\User;
 
 class TaskTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // ログインした状態にする
+        $user = User::factory()->create();
+        // actingAs()は指定ユーザーを現在のユーザーとして認証する
+        $this->actingAs($user);
+    }
+
     /**
      * @test
      */
@@ -19,9 +31,6 @@ class TaskTest extends TestCase
         $tasks = Task::factory()->count(10)->create();
         // 取得するデータはJSONなのでgetJsonを使用
         $response = $this->getJson('api/tasks');
-        // 取得データの確認
-        // dd($response->json());
-
         //登録と取得のデータ数が同じであるかの確認
         $response
             ->assertOk()
