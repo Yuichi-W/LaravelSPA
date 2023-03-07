@@ -7,10 +7,15 @@ export const getUsers = async () =>{
 }
 
 export const login = async ({ email, password }: { email: string, password: string }) =>{
-    const { data } = await axios.post<User>(
-        `/api/login`,{ email, password }
-    )
-    return data
+    try {
+        const { data } = await axios.post<User>(
+            `/api/login`,{ email, password }
+        );
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 
 export const logout = async () =>{
