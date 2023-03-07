@@ -4,8 +4,13 @@ import { Link } from "react-router-dom";
 import { TaskPage } from "./pages/tasks";
 import { LoginPage } from "./pages/login";
 import { HelpPage } from "./pages/help";
+import axios from 'axios';
 
 export const Router = () => {
+
+    useEffect(() => {
+    }, [])
+
     return (
         <BrowserRouter>
             <header className="global-head">

@@ -15,6 +15,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        dd($request);
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -35,7 +36,7 @@ class LoginController extends Controller
      * Log the user out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return  * \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function logout(Request $request)
     {

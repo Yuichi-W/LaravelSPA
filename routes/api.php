@@ -16,13 +16,20 @@ use Illuminate\Support\Facades\Route;
 // Route::group(['middleware' => 'auth:sanctam'], function() {
 // });
 
-Route::post('login' . 'LoginController@login');
-Route::post('logout' . 'LoginController@logout');
+Route::post('login', '\App\Http\Controllers\LoginController@login');
+Route::post('logout', '\App\Http\Controllers\LoginController@logout');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('tasks', 'App\Http\Controllers\TaskController');
+    Route::patch('tasks/update-done/{task}', 'App\Http\Controllers\TaskController@updateDone');
+    Route::get('user', function (Request $request) {
         return $request->user();
     });
-    Route::apiResource('/tasks', 'App\Http\Controllers\TaskController');
-    Route::patch('tasks/update-done/{task}', 'App\Http\Controllers\TaskController@updateDone');
 });
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::get('/user', function (Request $request) {
+//         return $request->user();
+//     });
+//     Route::apiResource('/tasks', 'App\Http\Controllers\TaskController');
+//     Route::patch('tasks/update-done/{task}', 'App\Http\Controllers\TaskController@updateDone');
+// });
