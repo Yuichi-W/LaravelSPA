@@ -8,8 +8,8 @@ import axios from 'axios';
 
 export const Router = () => {
 
-    useEffect(() => {
-    }, [])
+    // useEffect(() => {
+    // }, [])
 
     return (
         <BrowserRouter>

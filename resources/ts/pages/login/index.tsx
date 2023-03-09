@@ -8,6 +8,8 @@ export const LoginPage = () => {
 
     const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log(email);
+        console.log(password);
         login.mutate({ email, password });
     }
 

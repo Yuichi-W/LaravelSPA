@@ -12,27 +12,22 @@ const useMutationWithToast = (
     successMessage: string,
     errorMessage: string
 ) => {
-    console.log('123456');
     const queryClient = useQueryClient();
-
+    
     return useMutation(mutationFn, {
         onSuccess: () => {
             queryClient.invalidateQueries(['Users']);
             toast.success(successMessage);
         },
         onError: (error: AxiosError) => {
-            try {
-                const { data } = error.response!;
-                if (data.errors) {
-                    Object.values(data.errors).forEach((messages: string[]) => {
-                    messages.forEach((message: string) => {
-                        toast.error(message);
-                    });
+            const { data } = error.response!;
+            if (data.errors) {
+                Object.values(data.errors).forEach((messages: string[]) => {
+                messages.forEach((message: string) => {
+                    toast.error(message);
                 });
-                } else {
-                    toast.error(errorMessage);
-                }
-            } catch (e) {
+            });
+            } else {
                 toast.error(errorMessage);
             }
         },
