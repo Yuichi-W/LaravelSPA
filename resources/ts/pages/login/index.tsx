@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { useLogin } from '../../queries/AuthQuery';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
     const login = useLogin();
+    const navigate = useNavigate(); // useNavigateフックを呼び出す
     const [email, setEmail] = useState('admin@example.com');
     const [password, setPassword] = useState('password1234');
 
     const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(email);
-        console.log(password);
+        console.log('ログインを開始します',email,password);
         login.mutate({ email, password });
+        navigate('/');
     }
 
     return (

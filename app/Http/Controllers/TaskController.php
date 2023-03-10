@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        // onlyメソッドでユーザチェックを行うメソッドを指定
+        $this->middleware('can:checkUser,task')->only([
+            'updateDone',
+            'update',
+            'destroy',
+        ]);
+    }
     /**
      * Task一覧
      *
@@ -15,9 +25,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        // abort(500);  // エラー表示用
-        // return [];  // ０件表示用
-        return Task::orderByDesc('id')->get();
+        return Task::where('user_id', Auth::id())->orderByDesc('id')->get();
     }
 
     /**
@@ -28,22 +36,14 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
+        $request->merge([
+            'user_id' => \Auth::id()
+        ]);
         $task = Task::create($request->all());
 
         return $task
             ? response()->json($task, 201)
             : response()->json([], 500);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
     }
 
     /**
