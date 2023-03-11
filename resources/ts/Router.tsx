@@ -13,16 +13,6 @@ export const Router = () => {
     const { isLoading, data: authUser } = useUser();
     const navigate = useNavigate();
 
-    // ログイン済みであればsetIsAuthをTRUEそうでなければfalseでログイン画面にリダイレクト
-    useEffect(() => {
-        if (authUser) {
-            setIsAuth(true);
-        }
-        if (!isAuth && !isLoading) {
-            navigate("/login");
-        }
-    }, [authUser]);
-
     const navigation = (
         <header className="global-head">
         <ul>
@@ -43,11 +33,16 @@ export const Router = () => {
 
     if (isLoading) return <div className="loader"></div>
 
+    console.log('isAuth',isAuth);
     return (
         <>
         {/* ログイン済みであればnavigation表示 */}
         { isAuth ? navigation : loginNavigation }
         <Routes>
+            {/* ログイン済みでなければログインページにリダイレクトする */}
+            {!isAuth ? (
+                <Route path="/" element={<Navigate to="/login" replace={true} />} />
+            ) : null}
             <Route path={`/`} element={<TaskPage />} />
             <Route path={`/login/`} element={<LoginPage />} />
             <Route path={`/help/`} element={<HelpPage />} />

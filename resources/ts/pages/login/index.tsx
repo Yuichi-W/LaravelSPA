@@ -11,8 +11,11 @@ export const LoginPage = () => {
     const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log('ログインを開始します',email,password);
-        login.mutate({ email, password });
-        navigate('/');
+        login.mutate({ email, password }, {
+            onSuccess: () => {
+                navigate('/');
+            }
+        });
     }
 
     return (
